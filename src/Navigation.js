@@ -20,7 +20,6 @@ import clsx from 'clsx';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Cards from './Card';
-import { Link } from 'react-router-dom';
 
 
 const drawerWidth = 200;
@@ -107,7 +106,7 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-const NavBar = () => {
+const NavBar = (props) => {
 
     const classes = useStyles();
     const theme = useTheme();
@@ -170,7 +169,7 @@ const NavBar = () => {
             < Divider/>
             <List>
           {['Schedule Job', 'Messages', 'View all teams', 'Test 4'].map((text, index) => (
-            <ListItem button key={text}>
+            <ListItem button onClick={() => props.history.push("/Schedule")} key={text}>
               <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>

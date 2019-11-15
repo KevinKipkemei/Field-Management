@@ -10,9 +10,13 @@ import Card from "@material-ui/core/Card"
 import CardContent from '@material-ui/core/CardContent'
 import Button from'@material-ui/core/Button'
 import Avatar from '@material-ui/core/Avatar'
+import IconButton from '@material-ui/core/IconButton'
+import KeyboardArrowLeftRounded from '@material-ui/icons/KeyboardArrowLeftOutlined'
 
 
 const useStyles = makeStyles( theme =>({
+    
+
     form:{
         marginTop: 100,
         fontFamily: "Raleway",
@@ -20,13 +24,14 @@ const useStyles = makeStyles( theme =>({
         fontSize: 15
     },
 
-    // card :{
-    //     width: 500,
-    //     height: 500,
-    //     // marginLeft: 450,
-    //     marginTop: 50,
-    //     justifyContent: 'center'
-    // },
+    appBar: {
+        backgroundColor: '#1976d2'
+    },
+
+    card :{
+        width: 500,
+        marginTop: 50
+    },
 
     button :{
         marginTop: 70,
@@ -41,7 +46,7 @@ const useStyles = makeStyles( theme =>({
     }
 }))
 
-const Schedule = () => {
+const Schedule = (props) => {
     const classes = useStyles();
 
 
@@ -50,8 +55,11 @@ const Schedule = () => {
         <div>
            <div>
            <CssBaseline/>
-           <AppBar position = "fixed" color = "primary">
+           <AppBar position = "fixed" color = "primary" className = {classes.appBar}>
                <Toolbar>
+                   <IconButton color = "inherit" edge = "start" onClick={() => props.history.goBack()}>
+                       <KeyboardArrowLeftRounded/>
+                   </IconButton>
 
                </Toolbar>
            </AppBar>
@@ -60,27 +68,17 @@ const Schedule = () => {
        <Typography className = {classes.form} align = "center">
            Schedule New Task
        </Typography>
-       <Grid justify = "center" alignItems = "center">
-           <Grid item xs>
-             <Card>
+       <Grid>
+           <Grid container justify = "center">
+             <Card className = {classes.card}>
                 <div>
                <    CardContent>
                         <Avatar className = {classes.avatar} src = "./calendar.jpg"></Avatar>
-       {/* <Grid container spacing = {3}> */}
-            {/* <Grid xs={12}> */}
                         <TextField required id = "TeamName" name="TeamName" label="Team Name" variant = "outlined" margin = "normal" fullWidth/>
-            {/* </Grid> */}
-            {/* <Grid xs={12}> */}
                         <TextField required id = "FieldJob" name="FieldJob" label="Job Type"  variant ="outlined" fullWidth/>
-            {/* </Grid> */}
-            {/* <Grid xs={12}> */}
                          <TextField required id = "Location" name="Location" label="Location" variant = "outlined" margin = "normal" fullWidth/>
-            {/* </Grid>
-            <Grid xs={12}> */}
                          <TextField required id = "Date" name="Date" label="Date"  variant= "outlined" fullWidth/>
-            {/* </Grid> */}
-       {/* </Grid> */}
-                        <Button color = "primary" variant = "contained" className = {classes.button}> Schedule </Button>
+                        <Button variant = "contained" color = '#1976d2' className = {classes.button}> Schedule </Button>
                     </CardContent>
                 </div>
             </Card>
