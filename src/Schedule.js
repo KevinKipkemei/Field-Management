@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -12,6 +12,8 @@ import Button from'@material-ui/core/Button'
 import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton'
 import KeyboardArrowLeftRounded from '@material-ui/icons/KeyboardArrowLeftOutlined'
+import { thisExpression } from '@babel/types';
+import {db} from "./Firebase"
 
 
 const useStyles = makeStyles( theme =>({
@@ -46,8 +48,29 @@ const useStyles = makeStyles( theme =>({
     }
 }))
 
+
 const Schedule = (props) => {
-    const classes = useStyles();
+
+
+const classes = useStyles();
+   
+
+const addRec = () => {
+    db.collection("Schedule").doc().set({
+        Date: "",
+        Job: "",
+        Location: "",
+        Name:""})
+   
+     .then(function(){
+       console.log("Successful update");
+     })
+   
+     .catch (function(error){
+       console.error("Something went wrong");
+     })
+ };
+
 
 
     return(
@@ -74,11 +97,11 @@ const Schedule = (props) => {
                 <div>
                <    CardContent>
                         <Avatar className = {classes.avatar} src = "./calendar.jpg"></Avatar>
-                        <TextField required id = "TeamName" name="TeamName" label="Team Name" variant = "outlined" margin = "normal" fullWidth/>
-                        <TextField required id = "FieldJob" name="FieldJob" label="Job Type"  variant ="outlined" fullWidth/>
+                        <TextField required id = "TeamName" name="Name" label="Team Name" variant = "outlined" margin = "normal" fullWidth/>
+                        <TextField required id = "FieldJob" name="Job" label="Job Type"  variant ="outlined" fullWidth/>
                          <TextField required id = "Location" name="Location" label="Location" variant = "outlined" margin = "normal" fullWidth/>
-                         <TextField required id = "Date" name="Date" label="Date"  variant= "outlined" fullWidth/>
-                        <Button variant = "contained" color = '#1976d2' className = {classes.button}> Schedule </Button>
+                         <TextField required id = "Date" name="Date" label="Date"  variant= "outlined"  fullWidth/>
+                        <Button variant = "contained" color = '#1976d2' className = {classes.button} onClick = {addRec}> Schedule </Button>
                     </CardContent>
                 </div>
             </Card>
