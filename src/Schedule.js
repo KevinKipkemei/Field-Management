@@ -49,7 +49,7 @@ const useStyles = makeStyles( theme =>({
 }))
 
 
-const Schedule = (props) => {
+const Schedule = (props, {Date, Location, Job, Name}) => {
 
 
 const classes = useStyles();
@@ -95,12 +95,12 @@ const addRec = () => {
            <Grid container justify = "center">
              <Card className = {classes.card}>
                 <div>
-               <    CardContent>
+               <CardContent>
                         <Avatar className = {classes.avatar} src = "./calendar.jpg"></Avatar>
-                        <TextField required id = "TeamName" name="Name" label="Team Name" variant = "outlined" margin = "normal" fullWidth/>
-                        <TextField required id = "FieldJob" name="Job" label="Job Type"  variant ="outlined" fullWidth/>
-                         <TextField required id = "Location" name="Location" label="Location" variant = "outlined" margin = "normal" fullWidth/>
-                         <TextField required id = "Date" name="Date" label="Date"  variant= "outlined"  fullWidth/>
+                        <TextField required id = "TeamName" name="Name" value = {Name}label="Team Name" variant = "outlined" margin = "normal" fullWidth/>
+                        <TextField required id = "FieldJob" name="Job" value = {Job} label="Job Type"  variant ="outlined" fullWidth/>
+                         <TextField required id = "Location" name="Location" value = {Location} label="Location" variant = "outlined" margin = "normal" fullWidth/>
+                         <TextField required id = "Date" name="Date" label="Date" value = {Date}  variant= "outlined"  fullWidth/>
                         <Button variant = "contained" color = '#1976d2' className = {classes.button} onClick = {addRec}> Schedule </Button>
                     </CardContent>
                 </div>
