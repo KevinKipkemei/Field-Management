@@ -160,7 +160,7 @@ const NavBar = (props) => {
             <div className={classes.toolbar}></div>
             <List>
             {['Add New Team'].map((text, index) => (
-                    <ListItem button key={text}>
+                    <ListItem button onClick={() => props.history.push("/Team")}  key={text}>
                         <ListItemIcon> <AddBox/> </ListItemIcon>
                         <ListItemText primary={text}/>
                     </ListItem>
@@ -168,7 +168,7 @@ const NavBar = (props) => {
             </List>
             < Divider/>
             <List>
-          {['Schedule Job', 'Messages', 'View all teams', 'Test 4'].map((text, index) => (
+          {['Schedule Job', 'Messages', 'View all teams'].map((text, index) => (
             <ListItem button onClick={() => props.history.push("/Schedule")} key={text}>
               <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
               <ListItemText primary={text} />

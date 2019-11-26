@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -39,9 +39,30 @@ const useStyles = makeStyles( theme => ({
 
 
 
-const AddTeam = (props, {Name, Leader, Members}) => {
+const AddTeam = (props) => {
 
 const classes = useStyles();
+
+const [Team, setTeam]  = useState("");
+const [Leader, setLeader] = useState("");
+const [[Members], setMembers] = useState([]);
+
+
+const addRec = () => {
+    db.collection("Teams").doc().set({
+        Team: Team,
+        Leader: Leader,
+        Members: [Members]
+    })
+   
+     .then(function(){
+       console.log("Successful update");
+     })
+   
+     .catch (function(error){
+       console.error("Something went wrong");
+     })
+ };
 
 
 
@@ -53,7 +74,7 @@ return(
                 <CssBaseline/>
                 <AppBar position = "fixed" color="primary">
                     <Toolbar>
-                        <IconButton color = "inherit" edge = "start">
+                        <IconButton color = "inherit" edge = "start" onClick={() => props.history.goBack()}>
                             <KeyboardArrowLeftRounded/>
                         </IconButton>
                     </Toolbar>
@@ -64,28 +85,33 @@ return(
                     Add New Team
                 </Typography>
                 <Grid>
-                    <Grid cntainer justify = "center">
+                    <Grid container justify = "center">
                         <Card className = {classes.card}>
                             <div>
                             <CardContent>
-                                <TextField variant = "outlined"/>
-                                <Button variant = "contained" color = "#1976d2" className = {classes.button}></Button>
+                                <TextField label = "Team Name" variant = "outlined" margin = "normal" onChange = { e => setTeam (e.target.value) } fullWidth/>
+                                <TextField label = "Team Leader" variant = "outlined" onChange = {e => setLeader (e.target.value) } fullWidth/>
+                                <TextField  label = "Team Members" variant = "outlined" onChange = {e => setMembers (e.target.value) } margin = "normal" fullWidth/>
+                                <TextField  label = "Team Members" variant = "outlined" onChange = {e => setMembers (e.target.value) } fullWidth/>
+                                <Button variant = "contained" className = {classes.button} onClick = {addRec}> Add</Button>
                             </CardContent>
                             </div>
                         </Card>
                     </Grid>
                 </Grid>
-            </div>
+            </div> 
         </div>
     </React.Fragment>
 )
 };
 
 
+
 AddTeam.propTypes = {
-    Name: PropTypes.string.isRequired,
-    Leader: PropTypes.string.isRequired,
-    Members: PropTypes.string.isRequired
+    Name: PropTypes.string,
+    Leader: PropTypes.string,
+    Members: PropTypes.string,
+    onChange: PropTypes.func
 };
 
 
