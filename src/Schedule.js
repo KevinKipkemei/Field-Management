@@ -101,7 +101,7 @@ const addRec = () => {
                         <TextField required id = "FieldJob" name="Job" value = {Job} label="Job Type"  variant ="outlined" fullWidth/>
                          <TextField required id = "Location" name="Location" value = {Location} label="Location" variant = "outlined" margin = "normal" fullWidth/>
                          <TextField required id = "Date" name="Date" label="Date" value = {Date}  variant= "outlined"  fullWidth/>
-                        <Button variant = "contained" color = '#1976d2' className = {classes.button} onClick = {addRec}> Schedule </Button>
+                        <Button variant = "contained" className = {classes.button} onClick = {addRec}> Schedule </Button>
                     </CardContent>
                 </div>
             </Card>
