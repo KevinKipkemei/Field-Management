@@ -8,6 +8,7 @@ import Charts from './Chart';
 import Avatar from '@material-ui/core/Avatar';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Pies from './Pie';
+// import TeamList from './Teamlist';
 
 
 const useStyles = makeStyles({
@@ -88,7 +89,7 @@ const useStyles = makeStyles({
 
 });
 
-const Cards = () =>{
+const Cards = (props) =>{
     const classes= useStyles();
 
     return(
@@ -143,9 +144,9 @@ const Cards = () =>{
         </Card>
         <Card className={classes.thirdcard}>
             <CardContent>
-            <Typography className={classes.heading}>
+            <Typography component = {'span'} className={classes.heading}>
                 Latest Projects <br/>
-                Team
+                {/* <TeamList/> */}
             </Typography>           
 
             </CardContent>
