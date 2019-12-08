@@ -2,7 +2,7 @@
  import "firebase/firestore";
 
  const firebaseApp = firebase.initializeApp ({
-    apiKey: "AIzaSyCkE-xmQualBe0m713t3wf8zPr5U5SChYE",
+    apiKey: "AIzaSyCkE-xmQualBe0m713t3wf8z",
     authDomain: "field-d538a.firebaseapp.com",
     databaseURL: "https://field-d538a.firebaseio.com",
     projectId: "field-d538a",
