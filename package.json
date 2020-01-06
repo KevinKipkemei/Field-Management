@@ -10,9 +10,11 @@
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-google-maps": "^9.4.5",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
-    "recharts": "^1.8.5"
+    "recharts": "^1.8.5",
+    "set-interval-async": "^1.0.29"
   },
   "scripts": {
     "start": "react-scripts start",

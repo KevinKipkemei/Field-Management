@@ -4,7 +4,7 @@ import Schedule from './Schedule'
 import NavBar from './Navigation'
 import AddTeam from './Team'
 import TeamList from './Teamlist'
-
+import Maps from './Map'
 
 
 const Routes = () => {
@@ -14,6 +14,7 @@ const Routes = () => {
                 <Route path = "/Schedule" component = {Schedule} />
                 <Route path = "/Team" component = {AddTeam} />
                 <Route path = "/List" component = {TeamList} />
+                <Route path = "/Map"  component = {Maps} />
             </div>
         )
 }

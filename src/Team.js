@@ -93,6 +93,7 @@ return(
                                 <TextField label = "Team Leader" variant = "outlined" onChange = {e => setLeader (e.target.value) } fullWidth/>
                                 <TextField  label = "Team Members" variant = "outlined" onChange = {e => setMembers (e.target.value) } margin = "normal" fullWidth/>
                                 <TextField  label = "Team Members" variant = "outlined" onChange = {e => setMembers (e.target.value) } fullWidth/>
+                                <TextField label = "Team Members"  variant = "outlined" onChange = {e => setMembers (e.target.value)} margin = "normal" fullWidth/>
                                 <Button variant = "contained" className = {classes.button} onClick = {addRec}> Add</Button>
                             </CardContent>
                             </div>

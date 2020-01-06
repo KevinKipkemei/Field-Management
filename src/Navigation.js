@@ -20,6 +20,7 @@ import clsx from 'clsx';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Cards from './Card';
+import RoomIcon from '@material-ui/icons/Room';
 
 
 const drawerWidth = 200;
@@ -184,6 +185,16 @@ const NavBar = (props) => {
             </ListItem>
           ))}
         </List>
+        <Divider/>
+        <List>
+          {['Team Locations'].map((text) => (
+            <ListItem button  onClick={() => props.history.push("/Map")}>
+              <ListItemIcon> <RoomIcon /> </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider/>
          </Drawer>
          <main className= {classes.content}>
          <div className={classes.toolbar} />
