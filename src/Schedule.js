@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import { CssBaseline } from '@material-ui/core';
@@ -9,11 +10,16 @@ import { makeStyles } from '@material-ui/styles';
 import Card from "@material-ui/core/Card"
 import CardContent from '@material-ui/core/CardContent'
 import Button from'@material-ui/core/Button'
-import Avatar from '@material-ui/core/Avatar'
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers';
 import IconButton from '@material-ui/core/IconButton'
 import KeyboardArrowLeftRounded from '@material-ui/icons/KeyboardArrowLeftOutlined'
 import { thisExpression } from '@babel/types';
 import {db} from "./Firebase"
+import {useState, useEffect} from 'react'
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 
 const useStyles = makeStyles( theme =>({
@@ -45,7 +51,11 @@ const useStyles = makeStyles( theme =>({
         width: 70,
         marginBottom: 20,
         marginLeft: 200
-    }
+    },
+
+    formControl: {
+        minWidth: 120
+      }
 }))
 
 
@@ -53,23 +63,53 @@ const Schedule = (props, {Date, Location, Job, Name}) => {
 
 
 const classes = useStyles();
-   
 
-const addRec = () => {
-    db.collection("Schedule").doc().set({
-        Date: "",
-        Job: "",
-        Location: "",
-        Name:""})
+const [jobs, setJobs] = useState([])
+
+const [selected, setSelected] = useState('')
+
+const handleChange = event => {
+    setSelected(event.target.value);
+  };
    
-     .then(function(){
-       console.log("Successful update");
-     })
+console.log(selected)
+// const addRec = () => {
+//     db.collection("Schedule").doc().set({
+//         Date: "",
+//         Job: "",
+//         Location: "",
+//         Name:""})
    
-     .catch (function(error){
-       console.error("Something went wrong");
-     })
- };
+//      .then(function(){
+//        console.log("Successful update");
+//      })
+   
+//      .catch (function(error){
+//        console.error("Something went wrong");
+//      })
+//  };
+
+ 
+useEffect(() => {
+    // console.log('effect')
+    const unsub = db.collection('Schedule').onSnapshot(snapshot => {
+        const allJobs = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+        setJobs(allJobs);
+    });
+    return () => {
+        // console.log('cleanup');
+        unsub();
+    };
+}, [])
+
+const deleteTeams = id => {
+    db.collection('Schedule')
+    .doc(id)
+    .delete();
+};
 
 
 
@@ -92,19 +132,54 @@ const addRec = () => {
            Schedule New Task
        </Typography>
        <Grid>
-           <Grid container justify = "center">
-             <Card className = {classes.card}>
+           <Grid container justify = "center" direction = "column" alignItems = "center">
+               { jobs.map( job => (
+             <Card className = {classes.card} key = {job.id}>
                 <div>
                <CardContent>
-                        <Avatar className = {classes.avatar} src = "./calendar.jpg"></Avatar>
-                        <TextField required id = "TeamName" name="Name" value = {Name}label="Team Name" variant = "outlined" margin = "normal" fullWidth/>
-                        <TextField required id = "FieldJob" name="Job" value = {Job} label="Job Type"  variant ="outlined" fullWidth/>
-                         <TextField required id = "Location" name="Location" value = {Location} label="Location" variant = "outlined" margin = "normal" fullWidth/>
-                         <TextField required id = "Date" name="Date" label="Date" value = {Date}  variant= "outlined"  fullWidth/>
-                        <Button variant = "contained" className = {classes.button} onClick = {addRec}> Schedule </Button>
-                    </CardContent>
+                            <div>
+                                <div>Job Type: {job.Job}</div>
+                                <div>Job Location: {job.Location}</div>
+                                <div>Customer Contact: {job.Contact}</div>
+                            </div>
+                            <div>
+                                <Grid container direction = "row"   spacing = {5}>
+                                    <Grid item>
+                                        <FormControl className={classes.formControl}>
+                                            <InputLabel> Assign Team</InputLabel>
+                                            <Select value = {selected}  onChange = {handleChange}> 
+                                                <MenuItem value = "Team One">Team One</MenuItem>
+                                                <MenuItem value = "Team Two">Team Two</MenuItem>
+                                                <MenuItem value = "Team Three">Team Three</MenuItem>
+                                                <MenuItem value = "Team Four">Team Four</MenuItem>
+                                                <MenuItem value = "Team Five">Team Five</MenuItem>
+                                                <MenuItem value = "Team Six">Team Six</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                               </Grid>
+                               <Grid container direction = "column" >
+                                   <Button color="primary">Update</Button>
+                               </Grid>
+
+                               {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                               <Grid>
+                                               <KeyboardDatePicker
+                                                margin="normal"
+                                                id="date-picker-dialog"
+                                                label="Date picker dialog"
+                                                format="MM/dd/yyyy"
+                                                KeyboardButtonProps={{
+                                                    'aria-label': 'change date',
+                                                }}
+                                                />
+                               </Grid>
+                               </MuiPickersUtilsProvider> */}
+                               </Grid>
+                            </div>                  
+               </CardContent>
                 </div>
             </Card>
+               ))}
             </Grid>
        </Grid>
        </div>

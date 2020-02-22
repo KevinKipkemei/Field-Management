@@ -3,12 +3,14 @@ import {db} from "./Firebase";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import Card from "@material-ui/core/Card";
-import { CssBaseline, CardContent } from '@material-ui/core';
+import { CssBaseline} from '@material-ui/core';
 import KeyboardArrowLeftRounded from '@material-ui/icons/KeyboardArrowLeftOutlined'
-import { classes } from 'istanbul-lib-coverage';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography } from '@material-ui/core';
+import Chip from '@material-ui/core/Chip';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+
 
 
 const useStyles = makeStyles ( theme => ({
@@ -32,7 +34,31 @@ const useStyles = makeStyles ( theme => ({
         width: 900,
         marginTop: 50,
         height : 400
-    }
+    },
+
+    grid : {
+        color: "#1976d2"
+    },
+
+    list: {
+        width: '50%',
+        maxWidth: 350,
+        backgroundColor: theme.palette.background.paper,
+        margin: 30
+      },
+
+      chip: {
+        margin: theme.spacing(0.5),
+      },
+      section1: {
+        margin: theme.spacing(3, 2),
+      },
+      section2: {
+        margin: theme.spacing(2),
+      },
+      section3: {
+        margin: theme.spacing(3, 1, 1),
+      },
     
 }))
 
@@ -44,9 +70,10 @@ const TeamList = (props) => {
 const classes = useStyles();
 
 
+
 useEffect(() => {
     // console.log('effect')
-    const unsub = db.collection('Teams').onSnapshot(snapshot => {
+    const unsub = db.collection('Schedule').onSnapshot(snapshot => {
         const allTeams = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
@@ -65,11 +92,11 @@ const deleteTeams = id => {
     .delete();
 };
 
-console.log(teams)
+
 
 return (
     <React.Fragment>
-    <div className = {classes.root}>
+    <div>
         <div>
             <CssBaseline/>
                 <AppBar position = "fixed" color = "primary" className = {classes.appBar}>
@@ -82,26 +109,45 @@ return (
         </div>
         <div className = {classes.form}>
             <Typography className = {classes.form} align = "center">
-                Teams
+                Progress
             </Typography>
             <Grid>
-            <Grid container justify = "center">
-                <Card className = {classes.card}> 
-                <div>
-                    <CardContent>
-                <ul>
+            <Grid container direction = "row">
                     {teams.map(team => (
-                        <li key = {team.id}>
-                            <div>
-                                <div>{team.Leader}</div>
-                                <div>{team.Team}</div>
+                            <div  key = {team.id} className={classes.list}>
+                                <div className={classes.section1}>
+                                        <Grid container alignItems = "center">
+                                            <Grid item xs>
+                                                <Typography gutterBottom variant = "h4">
+                                                    {team.Name}
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item>
+                                                <Typography gutterBottom variant = "h6">
+                                                    {team.Job}
+                                                </Typography>
+                                            </Grid>
+                                        </Grid>
+                                        <Typography color = "textSecondary" variant = "body2">
+                                                {team.Location}
+                                        </Typography>
+                                </div>
+                                <div>
+                                    <Typography gutterBottom className={classes.section2} variant = "body1">
+                                        Progress
+                                    </Typography>
+                                </div>
+                                <div>
+                                    <Chip color = "primary" className={classes.chip} label = "Pending"/>
+                                    <Chip className={classes.chip} label = "Started"/>
+                                    <Chip className={classes.chip} label = "Complete"/>
+                                </div>
+                                <div className={classes.section3}>
+                                    <Button color = "primary" onClick={() => props.history.push("/Message")}>Contact Customer</Button>
+                                </div>
+                                <Divider variant = "middle"/>
                             </div>
-                        </li>
                     ))}
-                </ul>
-                </CardContent>
-                </div>
-                </Card>
             </Grid>
             </Grid>
         </div>
@@ -109,5 +155,6 @@ return (
     </React.Fragment>
 );
 };
+
 
 export default TeamList;

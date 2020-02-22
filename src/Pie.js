@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { PieChart, Pie, Sector } from 'recharts';
+import useState from 'react'
 
-const data = [
-  { name: 'Complete', value: 6 },
-  { name: 'Incomplete', value: 4 },
-];
 
 const colors = ['#0088FE', '#00C49F'];
 
+
+
 const renderActiveShape = (props) => {
+
+ 
   const RADIAN = Math.PI / 180;
+
   const {
     cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle,
     fill, payload, percent, value,
@@ -23,6 +25,7 @@ const renderActiveShape = (props) => {
   const ex = mx + (cos >= 0 ? 1 : -1) * 22;
   const ey = my;
   const textAnchor = cos >= 0 ? 'start' : 'end';
+  
 
   return (
     <g>
@@ -56,8 +59,17 @@ const renderActiveShape = (props) => {
 };
 
 
+
+
+const data = [
+  { name: 'Complete', value: 5 },
+  { name: 'Incomplete', value: 4 },
+];
+  
 export default class Pies extends Component {
   static jsfiddleUrl = 'https://jsfiddle.net/alidingling/hqnrgxpj/';
+  
+  
 
   state = {
     activeIndex: 0,

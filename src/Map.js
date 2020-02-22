@@ -11,6 +11,13 @@ import { CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import IconButton from '@material-ui/core/IconButton'
 import KeyboardArrowLeftRounded from '@material-ui/icons/KeyboardArrowLeftOutlined';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
+import Places from './Places'
 
 
 const useStyles = makeStyles( theme =>({
@@ -27,54 +34,21 @@ const useStyles = makeStyles( theme =>({
 
 
 
-class MarkerPureComponent extends React.PureComponent {
-    render () {
-        return (
-            <Marker position = {this.props.position}></Marker>
-        )
-    }
-}
-
-
-class InfoWindowPureComponent extends React.PureComponent {
-    render() {
-        const {children} = this.props;
-        console.log(children)
-        return (
-            <InfoWindow defaultPosition = {this.props.defaultPosition}>{this.props.children}</InfoWindow>
-        )
-    }
-}
-
-
-
-
-
-
 const WrappedMap = withScriptjs(withGoogleMap(props => (
     <GoogleMap defaultZoom = {13}
     defaultCenter = {{lat: -1.292066, lng : 36.821945}}>
           {props.positions.map(
               position => props.isMarkerShown && (
-                  <MarkerPureComponent
-                  key = {position.id}
-                  position = {{ lat:position.Latitude, lng: position.Longitude}}>
-                  </MarkerPureComponent>
+                  <Marker key = {position.id} position = {{ lat:position.Latitude, lng: position.Longitude}}>
+                      <InfoWindow>
+                          <div>
+                              {position.Team} <br/>
+                              <a href = "/Message">Message</a>
+                          </div>
+                      </InfoWindow>
+                  </Marker>
               )
            )}
-
-           {
-               props.positions.map(
-                   position => props.isMarkerShown && (
-                       <InfoWindowPureComponent key = {position.id} defaultPosition = {{lat: position.Latitude, lng: position.Longitude}}>
-                            <div>
-                                {position.Team} <br/>
-                                < a href = "/Nav">Message</a>
-                            </div>
-                       </InfoWindowPureComponent>
-                   )
-               )
-           }
                   
     </GoogleMap>
 )));
@@ -88,6 +62,16 @@ const Maps = (props) =>
     const classes = useStyles();
 
     const [positions, setPosition] = useState([]) 
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     
     useEffect(() => {
@@ -103,7 +87,6 @@ const Maps = (props) =>
         };
     }, [])
      
-
     return (
         <div>
              <div>
@@ -113,6 +96,28 @@ const Maps = (props) =>
                         <IconButton color = "inherit" edge = "start" onClick={() => props.history.goBack()}>
                             <KeyboardArrowLeftRounded/>
                          </IconButton>
+                            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                                        Search 
+                            </Button>
+                            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                                <DialogTitle id="form-dialog-title">Search</DialogTitle>
+                                <DialogContent>
+                                <DialogContentText>
+                                    Enter the name of the location to search for the closest team.
+                                </DialogContentText>
+                                        <div>
+                                        <Places/>
+                                        </div>
+                                </DialogContent>
+                                <DialogActions>
+                                <Button onClick={handleClose} color="primary">
+                                    Cancel
+                                </Button>
+                                <Button onClick={handleClose} color="primary">
+                                    Subscribe
+                                </Button>
+                                </DialogActions>
+                             </Dialog>
                      </Toolbar>
                     </AppBar>
             </div>
@@ -123,7 +128,7 @@ const Maps = (props) =>
                             <WrappedMap
                             isMarkerShown
                             positions = {positions}
-                            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyD29SDFXKcqARovEjwUqKl0ysEFKK7GCmU`}
+                            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
                             loadingElement={<div style={{ height: `100%` }} />}
                             containerElement={<div style={{ height: `100%` }} />}
                             mapElement={<div style={{ height: `100%` }} />}

@@ -178,7 +178,7 @@ const NavBar = (props) => {
         </List>
         < Divider/>
             <List>
-          {['View Teams'].map((text) => (
+          {['View Progress'].map((text) => (
             <ListItem button  onClick={() => props.history.push("/List")}>
               <ListItemIcon> <InboxIcon /> </ListItemIcon>
               <ListItemText primary={text} />
