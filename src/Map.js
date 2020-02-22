@@ -128,7 +128,10 @@ const Maps = (props) =>
                             <WrappedMap
                             isMarkerShown
                             positions = {positions}
+<<<<<<< HEAD
                             googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
+=======
+>>>>>>> 6685e550004016d0aa9b7246ddae76d67fbc5d6e
                             loadingElement={<div style={{ height: `100%` }} />}
                             containerElement={<div style={{ height: `100%` }} />}
                             mapElement={<div style={{ height: `100%` }} />}
