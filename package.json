@@ -23,7 +23,7 @@
     "react-scripts": "3.2.0",
     "recharts": "^1.8.5",
     "set-interval-async": "^1.0.29",
-    "twilio": "^3.39.3"
+    "twilio": "^4.13.0"
   },
   "scripts": {
     "start": "react-scripts start",
